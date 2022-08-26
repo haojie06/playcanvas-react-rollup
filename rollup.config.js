@@ -1,11 +1,20 @@
-import typescript from "@rollup/plugin-typescript";
-
+import typescript from 'rollup-plugin-typescript2';
+import commonjs from '@rollup/plugin-commonjs';
+import replace from '@rollup/plugin-replace';
+import { nodeResolve } from "@rollup/plugin-node-resolve";
 export default {
   input: "src/index.ts",
 
   external: ["playcanvas"],
 
-  plugins: [typescript()],
+  plugins: [
+    commonjs(),
+    replace({
+      'process.env.NODE_ENV': JSON.stringify('development')
+    }),
+    typescript(),
+    nodeResolve(),
+  ],
 
   output: {
     sourcemap: "inline",
